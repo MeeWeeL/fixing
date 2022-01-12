@@ -22,6 +22,6 @@ class CiceroneModule {
 
     @Singleton
     @Provides
-    fun router(): Router = cicerone.router
+    fun router(): CustomRouter = cicerone.router
 
 }

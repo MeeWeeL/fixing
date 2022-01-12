@@ -12,13 +12,15 @@ import com.github.terrakok.cicerone.androidx.AppNavigator
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
     @Inject
     lateinit var navigatorHolder: NavigatorHolder
     @Inject
     lateinit var router: CustomRouter
+
     private val navigator = CustomNavigator(this, R.id.content)
 
-    private var binding: ActivityMainBinding? = null
+    lateinit var binding: ActivityMainBinding
 
     override fun onResumeFragments() {
         super.onResumeFragments()
@@ -27,10 +29,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding?.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         App.instance.applicationComponent.inject(this)
         if (savedInstanceState == null) {
-            binding = ActivityMainBinding.inflate(layoutInflater)
             router.newRootScreen(UsersScreen())
         }
     }

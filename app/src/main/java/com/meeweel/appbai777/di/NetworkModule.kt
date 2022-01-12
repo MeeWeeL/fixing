@@ -18,7 +18,6 @@ class NetworkModule {
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
 
-    @Named("prod")
     @Reusable
     @Provides
     fun provideGitHubApi(gson: Gson): GitHubApi =
@@ -39,23 +38,4 @@ class NetworkModule {
             .create(GitHubApi::class.java)
 
 
-    @Named("test")
-    @Reusable
-    @Provides
-    fun provideGitHubApiTest(gson: Gson): GitHubApi =
-        Retrofit.Builder()
-            .baseUrl("https://test.github.com")
-            .client(
-                OkHttpClient.Builder()
-                    .addNetworkInterceptor(
-                        HttpLoggingInterceptor().apply {
-                            level = HttpLoggingInterceptor.Level.BODY
-                        }
-                    )
-                    .build()
-            )
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.createSynchronous())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(GitHubApi::class.java)
 }

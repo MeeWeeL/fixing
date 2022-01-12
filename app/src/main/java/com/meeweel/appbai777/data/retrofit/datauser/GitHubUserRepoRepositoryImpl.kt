@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GitHubUserRepoRepositoryImpl
 @Inject constructor(
     private val gitHubApi: GitHubApi,
-    db: DBGitHubStorage
+    private val db: DBGitHubStorage
 ) : GitHubUserRepoRepository {
 
     private val dbDao = db.getGitHubUserDao()

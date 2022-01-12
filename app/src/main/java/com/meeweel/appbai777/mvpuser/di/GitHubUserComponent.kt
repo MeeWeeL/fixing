@@ -18,7 +18,7 @@ interface GitHubUserComponent {
         fun build(): GitHubUserComponent
     }
 
-    fun inject(activity: UserPresenter)
+    fun inject(usersPresenter: UserPresenter)
 }
 
 @Scope

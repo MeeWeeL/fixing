@@ -4,6 +4,7 @@ import android.widget.Toast
 import com.meeweel.appbai777.App
 import com.meeweel.appbai777.data.GitHubUser
 import com.meeweel.appbai777.data.GitHubUserRepository
+import com.meeweel.appbai777.data.retrofit.datauser.GitHubUserRepoRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -15,6 +16,8 @@ class UserPresenter(private val userName: String,
                     private val subject: @NonNull BehaviorSubject<GitHubUser> = BehaviorSubject.create()
 ) : MvpPresenter<UserView>() {
 
+    @Inject
+    lateinit var userRepoRepository: GitHubUserRepoRepository
     @Inject
     lateinit var userRepository: GitHubUserRepository
 
@@ -35,7 +38,7 @@ class UserPresenter(private val userName: String,
     private fun setSubject() {
         subject
             .subscribe({
-                userRepository.getUserByName(it.login!!)
+                userRepoRepository.getUserByLogin(it.login!!)
                 viewState.showUser(it)
             },{})
     }
